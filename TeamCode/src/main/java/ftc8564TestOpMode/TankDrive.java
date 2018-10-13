@@ -36,24 +36,19 @@ public class TankDrive extends OpMode {
 
         if (abs(gamepad1.left_stick_y) > .2) {
             left.setPower(-gamepad1.left_stick_y);
-        }
-
-        else {
+        } else {
             left.setPower(0);
         }
 
         if (abs(gamepad1.right_stick_y) > .2) {
             right.setPower(gamepad1.right_stick_y);
-        }
-
-        else {
+        } else {
             right.setPower(0);
 
-        telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.update();
+            telemetry.addData("Status", "Run Time: " + runtime.toString());
+            telemetry.update();
+        }
+
+
     }
-
-
-
-
 }
