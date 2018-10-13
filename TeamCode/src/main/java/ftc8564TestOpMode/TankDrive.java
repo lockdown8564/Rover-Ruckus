@@ -16,7 +16,6 @@ public class TankDrive extends OpMode {
     @Override
     public void start() {
         runtime.reset();
-
     }
 
     @Override
