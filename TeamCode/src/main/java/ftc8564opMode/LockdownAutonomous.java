@@ -38,7 +38,7 @@ public class LockdownAutonomous extends LinearOpMode implements FtcMenu.MenuButt
 
         waitForStart();
 
-        if (hanging == Starting_Position.GROUND){
+        if (hanging == Starting_Position.HANGING){
             /*
             lift down
             servo move

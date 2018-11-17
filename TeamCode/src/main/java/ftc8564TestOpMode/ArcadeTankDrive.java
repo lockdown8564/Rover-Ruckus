@@ -74,8 +74,8 @@ public class ArcadeTankDrive extends OpMode {
         }
         else {
             if ((abs(gamepad1.left_stick_y) > .2) ||  (abs(gamepad1.right_stick_x) > .2)){
-                left.setPower(scalePower((gamepad1.right_stick_x - gamepad1.left_stick_y) * slow));
-                right.setPower(scalePower((gamepad1.right_stick_x + gamepad1.left_stick_y)* slow));
+                left.setPower(scalePower((gamepad1.right_stick_x + gamepad1.left_stick_y) * slow));
+                right.setPower(scalePower((gamepad1.right_stick_x - gamepad1.left_stick_y)* slow));
             }
             else {
                 left.setPower(0);
