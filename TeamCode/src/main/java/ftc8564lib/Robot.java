@@ -30,9 +30,14 @@ import hallib.HalDashboard;
 public class Robot {
 
     private static HalDashboard dashboard = null;
+    public DriveBase driveBase = null;
+    public PIDControl pidControl = null;
+    public GoldAlign goldAlign = null;
 
     public Robot(LinearOpMode opMode, boolean auto) throws InterruptedException {
         dashboard = new HalDashboard(opMode.telemetry);
+        driveBase = new DriveBase(opMode);
+        goldAlign = new GoldAlign(opMode);
 
     }
 

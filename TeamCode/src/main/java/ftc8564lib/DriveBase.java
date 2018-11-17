@@ -53,7 +53,7 @@ public class DriveBase implements PIDControl.PidInput {
     private Acceleration gravity;
 
     //private final static double SCALE = (144.5/12556.5);    // INCHES_PER_COUNT
-    private final static double SCALE = (.0112142857);
+    private final static double SCALE = (.0112142857); //circumference over counts per revolution
     private double degrees = 0.0;
     private double stallStartTime = 0.0;
     private double prevTime = 0.0;
@@ -464,6 +464,21 @@ public class DriveBase implements PIDControl.PidInput {
         } else {
             leftPower = (float) scalePower(leftPower);
             rightPower = (float) scalePower(rightPower);
+        }
+        leftMotor.setPower(leftPower);
+        rightMotor.setPower(rightPower);
+    }
+
+    public void arcadeDrive(float leftPower, float rightPower) throws InterruptedException {
+        leftPower = Range.clip(leftPower, -1, 1);
+        rightPower = Range.clip(rightPower, -1, 1);
+        if(slowSpeed)
+        {
+            leftPower = (float) scalePowerSlow(rightPower - leftPower);
+            rightPower = (float) scalePowerSlow(rightPower + leftPower);
+        } else {
+            leftPower = (float) scalePower(rightPower - leftPower);
+            rightPower = (float) scalePower(rightPower + leftPower);
         }
         leftMotor.setPower(leftPower);
         rightMotor.setPower(rightPower);
