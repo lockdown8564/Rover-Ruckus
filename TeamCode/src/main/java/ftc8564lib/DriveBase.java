@@ -98,9 +98,9 @@ public class DriveBase implements PIDControl.PidInput {
         //Variable Declaration section --------------------------------------------------------
 
         this.opMode = opMode;
-        rightMotor = opMode.hardwareMap.dcMotor.get("right");
+        rightMotor = opMode.hardwareMap.dcMotor.get("left");
         rightMotor.setDirection(DcMotor.Direction.REVERSE);
-        leftMotor = opMode.hardwareMap.dcMotor.get("left");
+        leftMotor = opMode.hardwareMap.dcMotor.get("right");
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -172,14 +172,14 @@ public class DriveBase implements PIDControl.PidInput {
         //Distance Check. Checked every tick.
         if (Math.abs(distance) <= 5)
         {
-            pidControl.setPID(0.081,0,0,0);
+            pidControl.setPID(0.1,0,0.03,0);
         }
         else if(Math.abs(distance) <= 10)
         {
-            pidControl.setPID(0.0485,0,0,0);
+            pidControl.setPID(0.1,0,0.03,0);
         } else
         {
-            pidControl.setPID(0.0345,0,.0005,0);
+            pidControl.setPID(0.1,0,0.03,0);
         }
         //-------------------------------------------------------------------------
 

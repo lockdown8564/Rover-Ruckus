@@ -40,6 +40,7 @@ public class GoldAlign {
         return detector.getAligned();
     }
 
+
     public double getXPosition(){
         return detector.getXPosition(); // Gold X position.
     }

@@ -35,7 +35,7 @@ import hallib.HalUtil;
  *   These three methods are used for current time processing. A fourth method called feedforward sort of acts to predict the next error and adjust for it.
  */
 
-public class PIDControl {
+public class    PIDControl {
 
     private HalDashboard dashboard;
     private double kP;

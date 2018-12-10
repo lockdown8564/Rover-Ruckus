@@ -54,26 +54,20 @@ public class LockdownAutonomous extends LinearOpMode implements FtcMenu.MenuButt
 
         if (alliance == Alliance_Position.BLUE_CRATER){
             robot.goldAlign.enable();
-            int count = 0;
-            while (!robot.goldAlign.getAligned() && count < 400000) {
-                count++;
-                robot.driveBase.spinPID(10);
+            if (robot.goldAlign.getAligned()) {
+                robot.driveBase.drivePID(15, false);
+            }
+            else {
+                robot.driveBase.spinPID(45);
                 if (robot.goldAlign.getAligned()) {
-                    break;
+                    robot.driveBase.drivePID(15, false);
+                }
+                robot.driveBase.spinPID(90);
+                if (robot.goldAlign.getAligned()) {
+                    robot.driveBase.drivePID(15, false);
                 }
             }
-            while (!robot.goldAlign.getAligned() && count < 800000) {
-                count++;
-                robot.driveBase.spinPID(-10);
-                if (robot.goldAlign.getAligned()) {
-                    break;
-                }
-            }
-
-            robot.driveBase.drivePID(15, false);
-            //extend
-            robot.driveBase.drivePID(-10, false);
-            robot.driveBase.spinPID(-90);
+            robot.goldAlign.stop();
         }
 
         else if (alliance == Alliance_Position.BLUE_DEPOT){
