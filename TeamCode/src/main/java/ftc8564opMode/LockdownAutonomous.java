@@ -53,7 +53,34 @@ public class LockdownAutonomous extends LinearOpMode implements FtcMenu.MenuButt
         //get minerals
 
         if (alliance == Alliance_Position.BLUE_CRATER){
-
+            robot.driveBase.drivePID(-36, false);
+            robot.goldAlign.enable();
+            if (robot.goldAlign.getAligned()) {
+                robot.driveBase.drivePID(-15, false);
+                robot.driveBase.drivePID(15, false);
+            }
+            else {
+                robot.driveBase.spinPID(90);
+                if (robot.goldAlign.getAligned()) {
+                    robot.driveBase.drivePID(-15, false);
+                    robot.driveBase.drivePID(15, false);
+                    robot.driveBase.spinPID(-45);
+                }
+                robot.driveBase.spinPID(-90);
+                if (robot.goldAlign.getAligned()) {
+                    robot.driveBase.drivePID(-15, false);
+                    robot.driveBase.drivePID(15, false);
+                    robot.driveBase.spinPID(45);
+                }
+            }
+            robot.goldAlign.stop();
+            robot.driveBase.spinPID(90);
+            robot.driveBase.drivePID(40,false);
+            robot.driveBase.spinPID(-45);
+            robot.driveBase.drivePID(50,false);
+            //drop the thing
+            robot.driveBase.spinPID(180);
+            robot.driveBase.drivePID(100,false);
         }
 
         else if (alliance == Alliance_Position.BLUE_DEPOT){
@@ -67,7 +94,7 @@ public class LockdownAutonomous extends LinearOpMode implements FtcMenu.MenuButt
                 robot.driveBase.drivePID(15, false);
             }
             else {
-                robot.driveBase.spinPID(45);
+                robot.driveBase.spinPID(90);
                 if (robot.goldAlign.getAligned()) {
                     robot.driveBase.drivePID(-15, false);
                     robot.driveBase.drivePID(15, false);
