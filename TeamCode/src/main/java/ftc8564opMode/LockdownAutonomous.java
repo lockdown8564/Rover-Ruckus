@@ -28,109 +28,61 @@ public class LockdownAutonomous extends LinearOpMode implements FtcMenu.MenuButt
     }
 
     private Alliance_Position alliance = Alliance_Position.BLUE_CRATER;
-    private Starting_Position hanging = Starting_Position.GROUND;
+    private Starting_Position hanging = Starting_Position.HANGING;
 
     @Override
     public void runOpMode() throws InterruptedException{
         robot = new Robot(this,true);
 
-        //servo,setposition lock x 2
-
         waitForStart();
 
         if (hanging == Starting_Position.HANGING){
-            /*
-            lift down
-            servo move
-            wait 1 second
-            lift up
-            wait 3 second
-            servo move
-            lift down
-             */
+          robot.hang.drop();
+          robot.driveBase.drivePID(3,false);
+          robot.driveBase.spinPID(180);
         }
 
         //get minerals
 
-        if (alliance == Alliance_Position.BLUE_CRATER){
-            robot.hang.climb(1);
-            HalUtil.sleep(5000);
-            robot.hang.stop();
-            robot.driveBase.spinPID(180);
-            HalUtil.sleep(1000);
-            robot.driveBase.spinPID(30);
+        robot.goldAlign.enable();
+        HalUtil.sleep(1000);
+        if (robot.goldAlign.getAligned()) {
             robot.driveBase.drivePID(-36, false);
-            robot.goldAlign.enable();
+        }
+        else {
+            robot.driveBase.spinPID(30);
+            HalUtil.sleep(1000);
             if (robot.goldAlign.getAligned()) {
-                robot.driveBase.drivePID(-15, false);
-                robot.driveBase.drivePID(15, false);
+                robot.driveBase.drivePID(-36, false);
+                robot.driveBase.spinPID(-30);
             }
             else {
-                robot.driveBase.spinPID(90);
+                robot.driveBase.spinPID(-65);
+                HalUtil.sleep(1000);
                 if (robot.goldAlign.getAligned()) {
-                    robot.driveBase.drivePID(-15, false);
-                    robot.driveBase.drivePID(15, false);
-                    robot.driveBase.spinPID(-45);
-                }
-                robot.driveBase.spinPID(-90);
-                if (robot.goldAlign.getAligned()) {
-                    robot.driveBase.drivePID(-15, false);
-                    robot.driveBase.drivePID(15, false);
-                    robot.driveBase.spinPID(45);
+                    robot.driveBase.drivePID(-36, false);
+                    robot.driveBase.spinPID(35);
                 }
             }
-            robot.goldAlign.stop();
-            /*
-            robot.driveBase.spinPID(90);
-            robot.driveBase.drivePID(40,false);
-            robot.driveBase.spinPID(-45);
-            robot.driveBase.drivePID(50,false);
-            //drop the thing
-            robot.driveBase.spinPID(180);
-            robot.driveBase.drivePID(100,false);
-
-            */
         }
+        robot.goldAlign.stop();
 
+        if (alliance == Alliance_Position.BLUE_CRATER) {
+            robot.driveBase.drivePID(30, false);
+        }
         else if (alliance == Alliance_Position.BLUE_DEPOT){
+            robot.driveBase.drivePID(20, false);
+            robot.intake.dropMarker();
 
         }
         else if (alliance == Alliance_Position.RED_CRATER){
-            robot.driveBase.drivePID(-36, false);
-            robot.goldAlign.enable();
-            if (robot.goldAlign.getAligned()) {
-                robot.driveBase.drivePID(-15, false);
-                robot.driveBase.drivePID(15, false);
-            }
-            else {
-                robot.driveBase.spinPID(90);
-                if (robot.goldAlign.getAligned()) {
-                    robot.driveBase.drivePID(-15, false);
-                    robot.driveBase.drivePID(15, false);
-                    robot.driveBase.spinPID(-45);
-                }
-                robot.driveBase.spinPID(-90);
-                if (robot.goldAlign.getAligned()) {
-                    robot.driveBase.drivePID(-15, false);
-                    robot.driveBase.drivePID(15, false);
-                    robot.driveBase.spinPID(45);
-                }
-            }
-            robot.goldAlign.stop();
-            robot.driveBase.spinPID(90);
-            robot.driveBase.drivePID(40,false);
-            robot.driveBase.spinPID(-45);
-            robot.driveBase.drivePID(50,false);
-            //drop the thing
-            robot.driveBase.spinPID(180);
-            robot.driveBase.drivePID(100,false);
-
-
-
+            robot.driveBase.drivePID(30, false);
         }
         else if (alliance == Alliance_Position.RED_DEPOT) {
-
+            robot.driveBase.drivePID(20, false);
+            robot.intake.dropMarker();
         }
+
 
     }
 
@@ -171,5 +123,6 @@ public class LockdownAutonomous extends LinearOpMode implements FtcMenu.MenuButt
         FtcMenu.walkMenuTree(alliancePositionMenu);
         alliance = (LockdownAutonomous.Alliance_Position) alliancePositionMenu.getCurrentChoiceObject();
     }
+
 
 }

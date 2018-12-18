@@ -4,10 +4,12 @@ import ftc8564lib.*;
 import hallib.HalUtil;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
 @Autonomous(name="PIDTest", group="Autonomous")
+@Disabled
 public class PIDTest extends LinearOpMode {
 
     private Robot robot;

@@ -57,4 +57,6 @@ public class GoldAlign {
         detector.disable();
     }
 
+
+
 }

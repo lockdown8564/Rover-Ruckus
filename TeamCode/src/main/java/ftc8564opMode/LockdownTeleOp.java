@@ -23,6 +23,7 @@
 
 package ftc8564opMode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -30,6 +31,7 @@ import static java.lang.Math.abs;
 import ftc8564lib.*;
 
 @TeleOp(name = "LockdownTeleOp", group = "ArcadeTankDrive")
+@Disabled
 
 public class LockdownTeleOp extends LinearOpMode {
 

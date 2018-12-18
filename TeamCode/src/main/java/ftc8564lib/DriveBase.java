@@ -62,7 +62,7 @@ public class DriveBase implements PIDControl.PidInput {
     private boolean slowSpeed;
     private double minTarget, maxTarget;
 
-    public DcMotor leftMotor, rightMotor;
+    private DcMotor leftMotor, rightMotor;
     //private FtcAnalogGyro gyro;
     private BNO055IMU imu;
     //private ModernRoboticsI2cGyro gyroSensor;
