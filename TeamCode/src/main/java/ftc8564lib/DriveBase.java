@@ -53,7 +53,7 @@ public class DriveBase implements PIDControl.PidInput {
     private Acceleration gravity;
 
     //private final static double SCALE = (144.5/12556.5);    // INCHES_PER_COUNT
-    private final static double SCALE = (.0112142857); //circumference over counts per revolution
+    private final static double SCALE = (.0112142857);
     private double degrees = 0.0;
     private double stallStartTime = 0.0;
     private double prevTime = 0.0;
@@ -117,7 +117,6 @@ public class DriveBase implements PIDControl.PidInput {
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
         imu.initialize(parameters);
         imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
-
         //gyro = new FtcAnalogGyro(opMode, "gyro1", 0.00067);
         //gyroSensor = (ModernRoboticsI2cGyro)opMode.hardwareMap.gyroSensor.get("gyro");
         mRunTime = new ElapsedTime();
@@ -140,12 +139,18 @@ public class DriveBase implements PIDControl.PidInput {
         //Extended: variable Declaration -------------------------------------------------------
         //Sets up PID Drive: kP, kI, kD, kF, Tolerance, Settling Time
         pidControl = new PIDControl(0.03,0,0,0,0.8,0.2,this);
-        pidControlTurn = new PIDControl(0.02,0,0,0,0.5,0.2,this);
+        pidControlTurn = new PIDControl(0.02,0,0,0,0.4,0.2,this);
         pidControlTurn.setAbsoluteSetPoint(true);
         dashboard.clearDisplay();
         //--------------------------------------------------------------------------------------
     }
 
+    public void inimu(){
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+        imu.initialize(parameters);
+        imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
+    }
 
     /**
      * void: drivePID(dist, "slow"(T/F), AbortTrigger (object) )
@@ -265,23 +270,29 @@ public class DriveBase implements PIDControl.PidInput {
         this.degrees = degrees;
         if(Math.abs(degrees - intZ()) < 10.0)      //<10 deg PID dial
         {
-            //pidControlTurn.setPID(0.05,0,0.0005,0);
-            pidControlTurn.setPID(0.15,0,0.0005,0);
+            pidControlTurn.setPID(0.05,0,0.0005,0);
+            //pidControlTurn.setPID(0.15,0,0.0005,0);
         } else if(Math.abs(degrees - intZ()) < 20.0)//<20deg PID dial
         {
-            //pidControlTurn.setPID(0.03,0,0.002,0);
-            pidControlTurn.setPID(0.13,0,0.002,0);
+            pidControlTurn.setPID(0.03,0,0.002,0);
+            //pidControlTurn.setPID(0.13,0,0.002,0);
         } else if(Math.abs(degrees - intZ()) < 45.0)//<40deg PID dial
         {
-            //pidControlTurn.setPID(0.022,0,0.0011,0);
-            pidControlTurn.setPID(0.122,0,0.0011,0);
+            pidControlTurn.setPID(0.022,0,0.0011,0);
+            //pidControlTurn.setPID(0.122,0,0.0011,0);
         } else if(Math.abs(degrees - intZ()) < 90.0)//<90deg PID dial
         {
-            pidControlTurn.setPID(0.123,0,0.0005,0);
-            //pidControlTurn.setPID(0.023,0,0.0005,0);
-        } else {                                       //More than 90deg PID dial
-            pidControlTurn.setPID(0.123,0,0,0);
-            //pidControlTurn.setPID(0.023,0,0,0)
+            //pidControlTurn.setPID(0.123,0,0.0005,0);
+            pidControlTurn.setPID(0.023,0,0.0005,0);
+        } else if(Math.abs(degrees - intZ()) < 140.0){                                       //More than 90deg PID dial
+            //pidControlTurn.setPID(0.123,0,0,0);
+            pidControlTurn.setPID(0.023,0,0,0);
+        }
+        else if(Math.abs(degrees - intZ()) < 170.0){
+            pidControlTurn.setPID(0.01,0,0,0);
+        }
+        else{
+            pidControlTurn.setPID(0.007 ,0,0,0);
         }
         //-----------------------------------------------------------------------------------
         pidControlTurn.setTarget(degrees);//sets target degrees.
@@ -309,13 +320,12 @@ public class DriveBase implements PIDControl.PidInput {
                 prevLeftPos = currLeftPos;
                 prevRightPos = currRightPos;
             }
-            else if (currTime > stallStartTime + 1)
+            else if ((currTime > stallStartTime + 1))
             {
                 // The motors are stalled for more than 1 seconds.
                 break;
             }
             //---------------------------------------------------------------------------------
-
             pidControlTurn.displayPidInfo(0);
             opMode.idle();
         }
@@ -324,6 +334,9 @@ public class DriveBase implements PIDControl.PidInput {
         rightMotor.setPower(0);
         resetPIDDrive();//reset
         resetIntZ();
+        if (degrees == 180){
+            inimu();
+        }
     }
 
     /**

@@ -17,16 +17,13 @@ public class ArcadeTankDrive extends OpMode {
     private DcMotor left;
     private DcMotor right;
 
-    private DcMotor liftleft;
-    private DcMotor liftright;
+    private DcMotor climb;
 
     private DcMotor pivot;
     private DcMotor intake;
 
     private DcMotor extension;
 
-    private Servo one;
-    private Servo two;
 
     private double slow = 1;
     private boolean intakeon = false;
@@ -48,13 +45,10 @@ public class ArcadeTankDrive extends OpMode {
     public void init() {
         left = hardwareMap.dcMotor.get("left");
         right = hardwareMap.dcMotor.get("right");
-        liftleft = hardwareMap.dcMotor.get("liftleft");
-        liftright = hardwareMap.dcMotor.get("liftright");
+        climb = hardwareMap.dcMotor.get("climb");
         pivot = hardwareMap.dcMotor.get("pivot");
         intake = hardwareMap.dcMotor.get("intake");
         extension = hardwareMap.dcMotor.get("extension");
-        one = hardwareMap.servo.get("one");
-        two = hardwareMap.servo.get("two");
     }
 
     @Override
@@ -69,15 +63,15 @@ public class ArcadeTankDrive extends OpMode {
 
         if (mode == "Tank") {
             if (abs(gamepad1.left_stick_y) > .2) {
-                left.setPower(-gamepad1.left_stick_y);
+                right.setPower(-gamepad1.left_stick_y * slow);
             } else {
-                left.setPower(0);
+                right.setPower(0);
             }
 
             if (abs(gamepad1.right_stick_y) > .2) {
-                right.setPower(gamepad1.right_stick_y);
+                left.setPower(gamepad1.right_stick_y * slow);
             } else {
-                right.setPower(0);
+                left.setPower(0);
             }
         }
         else {
@@ -100,6 +94,12 @@ public class ArcadeTankDrive extends OpMode {
             }
         }
 
+        if (gamepad1.y){
+            slow = slow * -1;
+        }
+
+
+
         if (gamepad1.a){
             mode = "Arcade";
         }
@@ -116,56 +116,60 @@ public class ArcadeTankDrive extends OpMode {
 
         //driver 2
 
-        if (abs(gamepad2.right_stick_y) > .2){
-            liftleft.setPower(scalePower(gamepad2.right_stick_y));
-            liftright.setPower(scalePower(gamepad2.right_stick_y));
+        if (gamepad2.dpad_up){
+            extension.setPower(1);
         }
-        else{
-            liftleft.setPower(0);
-            liftright.setPower(0);
+        else if (gamepad2.dpad_down){
+            extension.setPower(-1);
         }
-
-        if (abs(gamepad2.left_stick_y) > .2){
-            extension.setPower(scalePower((gamepad2.left_stick_y)));
-        }
-        else{
+        else {
             extension.setPower(0);
         }
 
-        if (gamepad2.left_bumper){
-            pivot.setPower(1);
-        }
-        else if (gamepad2.left_trigger > .2){
-            pivot.setPower(-1);
+
+        if (abs(gamepad2.left_stick_y) > .2){
+            pivot.setPower(scalePower(gamepad2.left_stick_y));
         }
         else{
             pivot.setPower(0);
         }
 
-        if (gamepad2.dpad_left){
-            one.setPosition(1);
-            two.setPosition(1);
+        if (gamepad2.left_bumper){
+            climb.setPower(1);
         }
-
-        if (gamepad2.dpad_right){
-            one.setPosition(-1);
-            two.setPosition(-1);
-        }
-
-
-        if (gamepad2.right_bumper){
-            intakeon = true;
-            intake.setPower(-1);
-        }
-        if (gamepad2.right_trigger > .2){
-            intakeon = false;
-            intake.setPower(1);
+        if (abs(gamepad2.left_trigger) > .2){
+            climb.setPower(-1);
         }
         else{
-            if (!intakeon){
+            climb.setPower(0);
+        }
+
+
+        if (gamepad2.right_bumper) {
+            if (intakeon) {
                 intake.setPower(0);
+                intakeon = false;
+            }
+            if (!intakeon) {
+                intake.setPower(-1);
+                intakeon = true;
             }
         }
+        if (gamepad2.right_trigger > .2){
+            intake.setPower(1);
+            intakeon = false;
+        }
+        else if (!intakeon){
+            intake.setPower(0);
+        }
+
+
+
+
+
+
+
+
 
 
       /*
@@ -186,6 +190,8 @@ public class ArcadeTankDrive extends OpMode {
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Mode: ", mode);
+        telemetry.addData("Changes: ", slow);
+
         telemetry.update();
     }
 

@@ -33,11 +33,13 @@ public class Robot {
     public DriveBase driveBase = null;
     public PIDControl pidControl = null;
     public GoldAlign goldAlign = null;
+    public Hang hang = null;
 
     public Robot(LinearOpMode opMode, boolean auto) throws InterruptedException {
         dashboard = new HalDashboard(opMode.telemetry);
         driveBase = new DriveBase(opMode);
         goldAlign = new GoldAlign(opMode);
+        hang = new Hang(opMode);
 
     }
 

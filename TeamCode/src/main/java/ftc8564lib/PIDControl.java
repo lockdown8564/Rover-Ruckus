@@ -73,6 +73,10 @@ public class    PIDControl {
         double getInput(PIDControl pidCtrl);
     }
 
+    public double prevError(){
+        return prevError;
+    }
+
     // Constructor
     public PIDControl(double kP, double kI, double kD, double kF, double tolerance, double settlingTime, PidInput pidInput) {
         dashboard = Robot.getDashboard();
@@ -91,6 +95,10 @@ public class    PIDControl {
         System.out.printf("Target=%.1f, Input=%.1f, Error=%.1f", setPoint, pidInput.getInput(this), prevError);
         System.out.println();
         System.out.printf("minOutput=%.1f, Output=%.1f, maxOutput=%.1f", minOutput, output, maxOutput);
+    }
+
+    public double help(){
+        return ((pidInput.getInput(this)) - setPoint );
     }
 
     public void setTargetRange(double minTarget, double maxTarget)
