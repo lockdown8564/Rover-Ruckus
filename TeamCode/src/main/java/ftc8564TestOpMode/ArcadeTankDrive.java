@@ -19,13 +19,22 @@ public class ArcadeTankDrive extends OpMode {
 
     private DcMotor climb;
 
+    /*
     private DcMotor pivot;
+
     private DcMotor intake;
 
     private DcMotor extension;
 
+    private Servo sort1;
+    private Servo sort2;
 
-    private double slow = 1;
+    double y = .5;
+    double b = .5;
+
+
+
+
     private boolean intakeon = false;
 
    // private DcMotor lift1;
@@ -36,9 +45,17 @@ public class ArcadeTankDrive extends OpMode {
 
     private String mode = "Tank";
 
+
+    */
+
+    private String mode = "Tank";
+    private double slow = 1;
+
     private double scalePower(double dVal) {
         return (Math.signum(dVal) * ((Math.pow(dVal, 2) * (.9)) + .1));
+
     }
+
 
 
     @Override
@@ -46,14 +63,22 @@ public class ArcadeTankDrive extends OpMode {
         left = hardwareMap.dcMotor.get("left");
         right = hardwareMap.dcMotor.get("right");
         climb = hardwareMap.dcMotor.get("climb");
-        pivot = hardwareMap.dcMotor.get("pivot");
+        //pivot = hardwareMap.dcMotor.get("pivot");
+        /*
         intake = hardwareMap.dcMotor.get("intake");
         extension = hardwareMap.dcMotor.get("extension");
+        sort1 = hardwareMap.servo.get("sort1");
+        sort2 = hardwareMap.servo.get("sort2");
+        */
     }
 
     @Override
     public void start() {
         runtime.reset();
+        /*
+        sort1.setPosition(.5);
+        sort2.setPosition(.5);
+        */
     }
 
     @Override
@@ -116,6 +141,8 @@ public class ArcadeTankDrive extends OpMode {
 
         //driver 2
 
+        /*
+
         if (gamepad2.dpad_up){
             extension.setPower(1);
         }
@@ -126,13 +153,34 @@ public class ArcadeTankDrive extends OpMode {
             extension.setPower(0);
         }
 
+        if (gamepad2.y){
+            sort1.setPosition(.5);
+        }
 
+        if (gamepad2.b){
+            sort1.setPosition(.1);
+        }
+
+        if (gamepad2.a){
+            sort2.stPosition(.9);
+        }
+
+        if (gamepad2.x){
+            sort2.setPosition(.5);
+        }
+
+
+*/
+
+
+        /*
         if (abs(gamepad2.left_stick_y) > .2){
             pivot.setPower(scalePower(gamepad2.left_stick_y));
         }
         else{
             pivot.setPower(0);
         }
+        */
 
         if (gamepad2.left_bumper){
             climb.setPower(1);
@@ -145,6 +193,7 @@ public class ArcadeTankDrive extends OpMode {
         }
 
 
+        /*
         if (gamepad2.right_bumper) {
             if (intakeon) {
                 intake.setPower(0);
@@ -162,7 +211,7 @@ public class ArcadeTankDrive extends OpMode {
         else if (!intakeon){
             intake.setPower(0);
         }
-
+*/
 
 
 

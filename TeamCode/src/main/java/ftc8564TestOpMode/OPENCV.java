@@ -9,8 +9,8 @@ import ftc8564lib.Robot;
 import hallib.HalUtil;
 
 
-@Autonomous(name="OPENCV", group="Autonomous")
-@Disabled
+@Autonomous(name="CLOSEDCV", group="Autonomous")
+//@Disabled
 public class OPENCV extends LinearOpMode {
 
     private Robot robot;
@@ -23,6 +23,7 @@ public class OPENCV extends LinearOpMode {
         robot.hang.climb(1);
         HalUtil.sleep(3000);
         robot.hang.stop();
+
         robot.goldAlign.enable();
         HalUtil.sleep(1000);
         if (robot.goldAlign.getAligned()) {
@@ -44,6 +45,8 @@ public class OPENCV extends LinearOpMode {
             }
         }
         robot.goldAlign.stop();
+
+        //robot.driveBase.drivePID(-100, false);
     }
 
 }

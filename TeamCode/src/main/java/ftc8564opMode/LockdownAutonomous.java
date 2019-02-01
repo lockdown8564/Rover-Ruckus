@@ -2,6 +2,7 @@ package ftc8564opMode;
 
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -10,6 +11,7 @@ import ftc8564lib.*;
 import hallib.HalUtil;
 
 @Autonomous(name="LockdownAutonomous", group="Autonomous")
+@Disabled
 public class LockdownAutonomous extends LinearOpMode implements FtcMenu.MenuButtons {
 
     private Robot robot;
@@ -38,8 +40,8 @@ public class LockdownAutonomous extends LinearOpMode implements FtcMenu.MenuButt
 
         if (hanging == Starting_Position.HANGING){
           robot.hang.drop();
-          robot.driveBase.drivePID(3,false);
           robot.driveBase.spinPID(180);
+          robot.driveBase.drivePID(3,false);
         }
 
         //get minerals
@@ -72,7 +74,7 @@ public class LockdownAutonomous extends LinearOpMode implements FtcMenu.MenuButt
         }
         else if (alliance == Alliance_Position.BLUE_DEPOT){
             robot.driveBase.drivePID(20, false);
-            robot.intake.dropMarker();
+            //robot.intake.dropMarker();
 
         }
         else if (alliance == Alliance_Position.RED_CRATER){
@@ -80,7 +82,7 @@ public class LockdownAutonomous extends LinearOpMode implements FtcMenu.MenuButt
         }
         else if (alliance == Alliance_Position.RED_DEPOT) {
             robot.driveBase.drivePID(20, false);
-            robot.intake.dropMarker();
+            //robot.intake.dropMarker();
         }
 
 
