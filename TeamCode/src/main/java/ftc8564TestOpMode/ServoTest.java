@@ -2,6 +2,7 @@ package ftc8564TestOpMode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -13,8 +14,9 @@ public class ServoTest extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
 
-    private Servo sort1;
-    private Servo sort2;
+    //private CRServo intake;
+    private Servo hatch;
+    //private Servo lock;
 
     private double scalePower(double dVal) {
         return (Math.signum(dVal) * ((Math.pow(dVal, 2) * (.9)) + .1));
@@ -23,23 +25,29 @@ public class ServoTest extends OpMode {
 
     @Override
     public void init() {
-        sort1 = hardwareMap.servo.get("sort1");
-        sort2 = hardwareMap.servo.get("sort2");
+        hatch = hardwareMap.servo.get("hatch");
+        //lock = hardwareMap.servo.get("lock");
+        //intake = hardwareMap.crservo.get("intake");
+        hatch.setPosition(1);
+       //lock lock.setPosition(.4);
+        //lock.setPosition(.4);
+
     }
 
     @Override
     public void start() {
         runtime.reset();
-        sort1.setPosition(.1);
-        sort2.setPosition(.9);
+        hatch.setPosition(.75);
+        //lock lock.setPosition(.4);
+        //open lock.setPosition(.82);
+        //easier lock.setPosition(.55);
+
     }
 
     @Override
     public void loop() {
 
-
-        telemetry.addData("sort1" , sort1.getPosition());
-        telemetry.addData("sort2" , sort2.getPosition());
+        //telemetry.addData("lock" , lock.getPosition());
 
         telemetry.update();
     }
