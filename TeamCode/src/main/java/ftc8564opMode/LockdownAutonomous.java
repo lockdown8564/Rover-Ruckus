@@ -70,18 +70,18 @@ public class LockdownAutonomous extends LinearOpMode implements FtcMenu.MenuButt
         robot.goldAlign.stop();
 
         if (alliance == Alliance_Position.BLUE_CRATER) {
-            robot.driveBase.drivePID(30, false);
+            robot.driveBase.drivePID(40, false);
         }
         else if (alliance == Alliance_Position.BLUE_DEPOT){
-            robot.driveBase.drivePID(20, false);
+            robot.driveBase.drivePID(30, false);
             //robot.intake.dropMarker();
 
         }
         else if (alliance == Alliance_Position.RED_CRATER){
-            robot.driveBase.drivePID(30, false);
+            robot.driveBase.drivePID(40, false);
         }
         else if (alliance == Alliance_Position.RED_DEPOT) {
-            robot.driveBase.drivePID(20, false);
+            robot.driveBase.drivePID(30, false);
             //robot.intake.dropMarker();
         }
 
