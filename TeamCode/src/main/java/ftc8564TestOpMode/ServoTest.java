@@ -1,5 +1,6 @@
 package ftc8564TestOpMode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -10,6 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import static java.lang.Math.abs;
 
 @TeleOp(name = "ServoTest", group = "ServoTest")
+@Disabled
 public class ServoTest extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 

@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import static java.lang.Math.abs;
 
-@TeleOp(name = "Kiddos", group = "Demo")
+@TeleOp(name = "Outreach TeleOp", group = "Demo")
 public class OutreachDemo extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 

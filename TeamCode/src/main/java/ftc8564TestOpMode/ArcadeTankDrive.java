@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import static java.lang.Math.abs;
 
 @TeleOp(name = "ArcadeTankDrive", group = "ArcadeTankDrive")
+@Disabled
 public class ArcadeTankDrive extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 

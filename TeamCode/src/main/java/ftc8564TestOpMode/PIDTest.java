@@ -20,21 +20,12 @@ public class PIDTest extends LinearOpMode {
 
         waitForStart();
 
-        //robot.driveBase.drivePID(60, false);
-        //robot.driveBase.drivePID(-60, false);
-
-        /*
         robot.driveBase.spinPID(90);
-        robot.driveBase.inimu();
-        robot.driveBase.spinPID(90);
-        */
-        robot.driveBase.spinPID(180);
         HalUtil.sleep(1000);
-        robot.driveBase.spinPID(180);
-        //robot.driveBase.spinPID(-90);
+        robot.driveBase.spinPID(60);
+        HalUtil.sleep(1000);
+        robot.driveBase.spinPID(30);
 
-        //robot.driveBase.spinPID(180);
-       // robot.driveBase.spinPID(-180);
     }
 
 }

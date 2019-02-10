@@ -10,7 +10,7 @@ import hallib.HalUtil;
 
 
 @Autonomous(name="CLOSEDCV", group="Autonomous")
-//@Disabled
+@Disabled
 public class OPENCV extends LinearOpMode {
 
     private Robot robot;

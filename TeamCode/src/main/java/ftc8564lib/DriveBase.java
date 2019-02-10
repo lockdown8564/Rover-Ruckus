@@ -292,7 +292,7 @@ public class DriveBase implements PIDControl.PidInput {
             pidControlTurn.setPID(0.01,0,0,0);
         }
         else{
-            pidControlTurn.setPID(0.007 ,0,0,0);
+            pidControlTurn.setPID(0.016 ,0,0,0);
         }
         //-----------------------------------------------------------------------------------
         pidControlTurn.setTarget(degrees);//sets target degrees.

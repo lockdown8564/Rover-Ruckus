@@ -11,7 +11,7 @@ import ftc8564lib.*;
 import hallib.HalUtil;
 
 @Autonomous(name="LockdownAutonomous", group="Autonomous")
-@Disabled
+//@Disabled
 public class LockdownAutonomous extends LinearOpMode implements FtcMenu.MenuButtons {
 
     private Robot robot;
@@ -41,11 +41,9 @@ public class LockdownAutonomous extends LinearOpMode implements FtcMenu.MenuButt
         if (hanging == Starting_Position.HANGING){
           robot.hang.drop();
           robot.driveBase.spinPID(180);
-          robot.driveBase.drivePID(3,false);
         }
 
         //get minerals
-
         robot.goldAlign.enable();
         HalUtil.sleep(1000);
         if (robot.goldAlign.getAligned()) {
@@ -56,14 +54,14 @@ public class LockdownAutonomous extends LinearOpMode implements FtcMenu.MenuButt
             HalUtil.sleep(1000);
             if (robot.goldAlign.getAligned()) {
                 robot.driveBase.drivePID(-36, false);
-                robot.driveBase.spinPID(-30);
+                robot.driveBase.spinPID(-60);
             }
             else {
                 robot.driveBase.spinPID(-65);
                 HalUtil.sleep(1000);
                 if (robot.goldAlign.getAligned()) {
                     robot.driveBase.drivePID(-36, false);
-                    robot.driveBase.spinPID(35);
+                    robot.driveBase.spinPID(60);
                 }
             }
         }
@@ -73,16 +71,18 @@ public class LockdownAutonomous extends LinearOpMode implements FtcMenu.MenuButt
             robot.driveBase.drivePID(40, false);
         }
         else if (alliance == Alliance_Position.BLUE_DEPOT){
+            robot.driveBase.spinPID(180);
             robot.driveBase.drivePID(30, false);
-            //robot.intake.dropMarker();
+            robot.intake.dropMarker();
 
         }
         else if (alliance == Alliance_Position.RED_CRATER){
             robot.driveBase.drivePID(40, false);
         }
         else if (alliance == Alliance_Position.RED_DEPOT) {
+            robot.driveBase.spinPID(180);
             robot.driveBase.drivePID(30, false);
-            //robot.intake.dropMarker();
+            robot.intake.dropMarker();
         }
 
 
