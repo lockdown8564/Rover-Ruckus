@@ -69,10 +69,8 @@ public class LockdownTeleOp extends LinearOpMode {
                 ipress = false;
             }
             if (!invertDrive){
-                robot.driveBase.arcadeDrive(gamepad1.left_stick_y, gamepad1.right_stick_y);
             }
             else if (invertDrive){
-                robot.driveBase.arcadeDrive(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
             }
 
             //driver 2
@@ -97,33 +95,6 @@ public class LockdownTeleOp extends LinearOpMode {
             }
             if (!gamepad2.x && !(robot.intake.getPower() == 1)) {
                 robot.intake.power(0);
-            }
-
-            //servos
-            if (gamepad2.b && !bpress) {
-                if (robot.lock.hatch.getPosition() < .9) {
-                    robot.lock.hatch.setPosition(.98);
-                }
-                else {
-                    robot.lock.hatch.setPosition(.75);
-                }
-                bpress = true;
-            }
-            else if (!gamepad2.b) {
-                bpress = false;
-            }
-
-            if (gamepad2.left_bumper && !lbpress) {
-                if (robot.lock.lock.getPosition() < .5) {
-                    robot.lock.open();
-                }
-                else {
-                    robot.lock.close();
-                }
-                lbpress = true;
-            }
-            else if (!gamepad2.left_bumper) {
-                lbpress = false;
             }
 
 

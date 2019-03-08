@@ -35,7 +35,6 @@ public class Robot {
     public GoldAlign goldAlign = null;
     public Hang hang = null;
     public Intake intake = null;
-    public Lock lock = null;
     public Extension extension = null;
 
     public Robot(LinearOpMode opMode, boolean auto) throws InterruptedException {
@@ -44,9 +43,7 @@ public class Robot {
         goldAlign = new GoldAlign(opMode);
         hang = new Hang(opMode);
         intake = new Intake(opMode);
-        lock = new Lock(opMode);
         extension = new Extension(opMode);
-
     }
 
     public static HalDashboard getDashboard() {

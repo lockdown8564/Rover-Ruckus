@@ -13,7 +13,7 @@ public class Extension {
     }
 
     public void power(double power){
-        extension.setPower(-scalePower(power));
+        extension.setPower(scalePower(power));
     }
 
     private double scalePower(double dVal) {

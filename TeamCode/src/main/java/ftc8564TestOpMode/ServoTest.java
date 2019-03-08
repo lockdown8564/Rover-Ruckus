@@ -11,13 +11,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import static java.lang.Math.abs;
 
 @TeleOp(name = "ServoTest", group = "ServoTest")
-@Disabled
+//@Disabled
 public class ServoTest extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
 
     //private CRServo intake;
-    private Servo hatch;
+    private Servo lock;
     //private Servo lock;
 
     private double scalePower(double dVal) {
@@ -27,19 +27,15 @@ public class ServoTest extends OpMode {
 
     @Override
     public void init() {
-        hatch = hardwareMap.servo.get("hatch");
-        //lock = hardwareMap.servo.get("lock");
-        //intake = hardwareMap.crservo.get("intake");
-        hatch.setPosition(1);
-       //lock lock.setPosition(.4);
-        //lock.setPosition(.4);
+        lock = hardwareMap.servo.get("lock");
+
 
     }
 
     @Override
     public void start() {
         runtime.reset();
-        hatch.setPosition(.75);
+        lock.setPosition(1);
         //lock lock.setPosition(.4);
         //open lock.setPosition(.82);
         //easier lock.setPosition(.55);
@@ -48,7 +44,6 @@ public class ServoTest extends OpMode {
 
     @Override
     public void loop() {
-
         //telemetry.addData("lock" , lock.getPosition());
 
         telemetry.update();

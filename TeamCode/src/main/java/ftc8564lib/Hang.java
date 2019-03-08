@@ -22,19 +22,11 @@ public class Hang {
     }
 
     public void power(double power){
-        climb.setPower(-scalePower(power));
+        climb.setPower(scalePower(power));
     }
 
     private double scalePower(double dVal) {
         return (Math.signum(dVal) * ((Math.pow(dVal, 2) * (.9)) + .1));
-    }
-
-    public void open(){
-        lock.setPosition(.525);
-    }
-
-    public void close(){
-        lock.setPosition(.4);
     }
 
     public void stop(){
@@ -42,12 +34,14 @@ public class Hang {
     }
 
     public void drop(){
-        climb(-1);
+        climb.setPower(1);
         HalUtil.sleep(500);
-        lock.setPosition(.525);
-        climb(1);
-        HalUtil.sleep(3000);
-        stop();
+        lock.setPosition(1);
+        HalUtil.sleep(700);
+        climb(-1);
+        HalUtil.sleep(2000);
+        climb.setPower(0);
+        HalUtil.sleep(500);
     }
 
 }

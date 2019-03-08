@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import static java.lang.Math.abs;
 
 @TeleOp(name = "ArcadeTankDrive", group = "ArcadeTankDrive")
-@Disabled
+//@Disabled
 public class ArcadeTankDrive extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -22,9 +22,9 @@ public class ArcadeTankDrive extends OpMode {
     private DcMotor climb;
     private DcMotor extension;
 
-    private CRServo intake;
-    private Servo hatch;
-    private Servo lock;
+    private DcMotor intake;
+
+    private Servo lock; //lb
 
     private double slow = 1;
 
@@ -45,11 +45,8 @@ public class ArcadeTankDrive extends OpMode {
         climb = hardwareMap.dcMotor.get("climb");
         climb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         extension = hardwareMap.dcMotor.get("extension");
-
-        hatch = hardwareMap.servo.get("hatch");
-        lock = hardwareMap.servo.get("lock");
-
-        intake = hardwareMap.crservo.get("intake");
+        intake = hardwareMap.dcMotor.get("intake");
+        intake.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     @Override
@@ -88,14 +85,14 @@ public class ArcadeTankDrive extends OpMode {
 
         //driver 2
         if (abs(gamepad2.left_stick_y) > .2){
-            extension.setPower(scalePower(-gamepad2.left_stick_y));
+            extension.setPower(scalePower(gamepad2.left_stick_y));
         }
         else{
             extension.setPower(0);
         }
 
         if (abs(gamepad2.right_stick_y) > .2){
-            climb.setPower(scalePower(-gamepad2.right_stick_y));
+            climb.setPower(scalePower(gamepad2.right_stick_y));
         }
         else{
             climb.setPower(0);
@@ -121,43 +118,10 @@ public class ArcadeTankDrive extends OpMode {
             intake.setPower(0);
         }
 
-        if (gamepad2.b && !bpress) {
-            if (hatch.getPosition() < .9) {
-                hatch.setPosition(.98);
-            }
-            else {
-                hatch.setPosition(.75);
-            }
-            bpress = true;
-        }
-        else if (!gamepad2.b) {
-            bpress = false;
-        }
-
-        if (gamepad2.left_bumper && !lbpress) {
-            if (lock.getPosition() < .5) {
-                lock.setPosition(.525);
-            }
-            else {
-                lock.setPosition(.4);
-            }
-            lbpress = true;
-        }
         else if (!gamepad2.left_bumper) {
             lbpress = false;
         }
 
-        /*
-        if (gamepad2.right_bumper){
-            climb.setPower(1);
-        }
-        if (abs(gamepad2.right_trigger) > .2){
-            climb.setPower(-1);
-        }
-        else{
-            climb.setPower(0);
-        }
-        */
 
 
 

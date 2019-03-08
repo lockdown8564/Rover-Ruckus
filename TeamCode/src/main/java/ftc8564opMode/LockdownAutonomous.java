@@ -17,11 +17,9 @@ public class LockdownAutonomous extends LinearOpMode implements FtcMenu.MenuButt
     private Robot robot;
     private ElapsedTime mClock = new ElapsedTime();
 
-    public enum Alliance_Position {
-        BLUE_CRATER,
-        BLUE_DEPOT,
-        RED_CRATER,
-        RED_DEPOT
+    public enum Position {
+        CRATER,
+        DEPOT,
     }
 
     public enum Starting_Position {
@@ -29,7 +27,7 @@ public class LockdownAutonomous extends LinearOpMode implements FtcMenu.MenuButt
         GROUND
     }
 
-    private Alliance_Position alliance = Alliance_Position.BLUE_CRATER;
+    private Position alliance = Position.CRATER;
     private Starting_Position hanging = Starting_Position.HANGING;
 
     @Override
@@ -43,49 +41,42 @@ public class LockdownAutonomous extends LinearOpMode implements FtcMenu.MenuButt
           robot.driveBase.spinPID(180);
         }
 
+
         //get minerals
         robot.goldAlign.enable();
-        HalUtil.sleep(1000);
+        HalUtil.sleep(2000);
         if (robot.goldAlign.getAligned()) {
             robot.driveBase.drivePID(-36, false);
+            robot.driveBase.drivePID(36, false);
         }
         else {
             robot.driveBase.spinPID(30);
-            HalUtil.sleep(1000);
+            HalUtil.sleep(2000);
             if (robot.goldAlign.getAligned()) {
                 robot.driveBase.drivePID(-36, false);
-                robot.driveBase.spinPID(-60);
+                robot.driveBase.drivePID(36, false);
+                robot.driveBase.spinPID(30);
             }
             else {
-                robot.driveBase.spinPID(-65);
-                HalUtil.sleep(1000);
+                robot.driveBase.spinPID(-60);
+                HalUtil.sleep(2000);
                 if (robot.goldAlign.getAligned()) {
                     robot.driveBase.drivePID(-36, false);
+                    robot.driveBase.drivePID(36, false);
                     robot.driveBase.spinPID(60);
                 }
             }
         }
         robot.goldAlign.stop();
 
-        if (alliance == Alliance_Position.BLUE_CRATER) {
-            robot.driveBase.drivePID(40, false);
-        }
-        else if (alliance == Alliance_Position.BLUE_DEPOT){
-            robot.driveBase.spinPID(180);
-            robot.driveBase.drivePID(30, false);
-            robot.intake.dropMarker();
 
+        if (alliance == Position.CRATER) {
+            robot.driveBase.drivePID(-40, false);
         }
-        else if (alliance == Alliance_Position.RED_CRATER){
+        else if (alliance == Position.DEPOT) {
             robot.driveBase.drivePID(40, false);
-        }
-        else if (alliance == Alliance_Position.RED_DEPOT) {
-            robot.driveBase.spinPID(180);
-            robot.driveBase.drivePID(30, false);
             robot.intake.dropMarker();
         }
-
-
     }
 
     @Override
@@ -112,10 +103,8 @@ public class LockdownAutonomous extends LinearOpMode implements FtcMenu.MenuButt
         FtcChoiceMenu alliancePositionMenu = new FtcChoiceMenu("Alliance Position:", null, this);
         FtcChoiceMenu hangingMenu = new FtcChoiceMenu("Alliance Position:", alliancePositionMenu, this);
 
-        alliancePositionMenu.addChoice("BLUE CRATER", LockdownAutonomous.Alliance_Position.BLUE_CRATER);
-        alliancePositionMenu.addChoice("BLUE DEPOT", LockdownAutonomous.Alliance_Position.BLUE_DEPOT);
-        alliancePositionMenu.addChoice("RED CRATER", LockdownAutonomous.Alliance_Position.RED_CRATER);
-        alliancePositionMenu.addChoice("RED DEPOT", LockdownAutonomous.Alliance_Position.RED_DEPOT);
+        alliancePositionMenu.addChoice("CRATER", LockdownAutonomous.Position.CRATER);
+        alliancePositionMenu.addChoice("DEPOT", LockdownAutonomous.Position.DEPOT);
 
         hangingMenu.addChoice("HANGING", LockdownAutonomous.Starting_Position.HANGING);
         hangingMenu.addChoice("GROUND", LockdownAutonomous.Starting_Position.GROUND);
@@ -123,7 +112,8 @@ public class LockdownAutonomous extends LinearOpMode implements FtcMenu.MenuButt
 
 
         FtcMenu.walkMenuTree(alliancePositionMenu);
-        alliance = (LockdownAutonomous.Alliance_Position) alliancePositionMenu.getCurrentChoiceObject();
+        alliance = (LockdownAutonomous.Position) alliancePositionMenu.getCurrentChoiceObject();
+        hanging = (LockdownAutonomous.Starting_Position) hangingMenu.getCurrentChoiceObject();
     }
 
 

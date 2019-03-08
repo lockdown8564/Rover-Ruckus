@@ -98,9 +98,9 @@ public class DriveBase implements PIDControl.PidInput {
         //Variable Declaration section --------------------------------------------------------
 
         this.opMode = opMode;
-        rightMotor = opMode.hardwareMap.dcMotor.get("left");
+        rightMotor = opMode.hardwareMap.dcMotor.get("right");
+        leftMotor = opMode.hardwareMap.dcMotor.get("left");
         rightMotor.setDirection(DcMotor.Direction.REVERSE);
-        leftMotor = opMode.hardwareMap.dcMotor.get("right");
         leftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -177,14 +177,14 @@ public class DriveBase implements PIDControl.PidInput {
         //Distance Check. Checked every tick.
         if (Math.abs(distance) <= 5)
         {
-            pidControl.setPID(0.1,0,0.03,0);
+            pidControl.setPID(0.2,0,0.03,0);
         }
         else if(Math.abs(distance) <= 10)
         {
-            pidControl.setPID(0.1,0,0.03,0);
+            pidControl.setPID(0.2,0,0.03,0);
         } else
         {
-            pidControl.setPID(0.1,0,0.03,0);
+            pidControl.setPID(0.2,0,0.045,0);
         }
         //-------------------------------------------------------------------------
 
@@ -283,7 +283,7 @@ public class DriveBase implements PIDControl.PidInput {
         } else if(Math.abs(degrees - intZ()) < 90.0)//<90deg PID dial
         {
             //pidControlTurn.setPID(0.123,0,0.0005,0);
-            pidControlTurn.setPID(0.023,0,0.0005,0);
+            pidControlTurn.setPID(0.02,0,0.0005,0);
         } else if(Math.abs(degrees - intZ()) < 140.0){                                       //More than 90deg PID dial
             //pidControlTurn.setPID(0.123,0,0,0);
             pidControlTurn.setPID(0.023,0,0,0);
@@ -292,7 +292,7 @@ public class DriveBase implements PIDControl.PidInput {
             pidControlTurn.setPID(0.01,0,0,0);
         }
         else{
-            pidControlTurn.setPID(0.016 ,0,0,0);
+            pidControlTurn.setPID(0.019 ,0,0,0);
         }
         //-----------------------------------------------------------------------------------
         pidControlTurn.setTarget(degrees);//sets target degrees.

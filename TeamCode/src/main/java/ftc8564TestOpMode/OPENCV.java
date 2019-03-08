@@ -9,7 +9,7 @@ import ftc8564lib.Robot;
 import hallib.HalUtil;
 
 
-@Autonomous(name="CLOSEDCV", group="Autonomous")
+@Autonomous(name="dont choose me", group="Autonomous")
 @Disabled
 public class OPENCV extends LinearOpMode {
 

@@ -7,12 +7,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import hallib.HalUtil;
 
 public class Intake {
-    private CRServo intake;
+    private DcMotor intake;
     private LinearOpMode opMode;
 
     public Intake(LinearOpMode opMode){
         this.opMode = opMode;
-        intake = opMode.hardwareMap.crservo.get("intake");
+        intake = opMode.hardwareMap.dcMotor.get("intake");
     }
 
     public void power(double power) {
